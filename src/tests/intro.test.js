@@ -38,6 +38,6 @@ describe("factorial", () => {
   it("should return invalid if arg is neg", () => {
     let n = -5;
 
-    expect(Factorial(n)).toBe("invalid");
+    expect(Factorial(n)).toBeUndefined();
   });
 });

@@ -19,5 +19,5 @@ export function Factorial(n) {
     return sum;
   }
   if (n == 0) return 1;
-  if (n < 0) return "invalid";
+  if (n < 0) return undefined;
 }
