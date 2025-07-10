@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calculateDiscount, getCoupons } from "../core";
+import { calculateDiscount, getCoupons, validateUserInput } from "../core";
 describe("Get Coupouns", () => {
   it("returns an array of length greater than 1", () => {
     expect(getCoupons().length).greaterThan(0);
@@ -38,5 +38,36 @@ describe("calculateDiscount", () => {
   });
   it("should return orginal price  if discount code is not valid", () => {
     expect(calculateDiscount(10, "SAVE30")).toBe(10);
+  });
+});
+describe("validateUserInput", () => {
+  //POSITIVE TESTING FOR USER NAME
+  it("username should validate successfull if it is of type string", () => {
+    expect(validateUserInput("akash", 20)).toMatch(/success/i);
+  });
+  it("username should validate successfull if its length is greater than 3", () => {
+    const username = "y00";
+    expect(validateUserInput(username, 70)).toMatch(/success/i);
+  });
+  //NEGATIVE THINKING FOR USER NAME
+  it("should return invalid if username arg is not of type string", () => {
+    expect(validateUserInput(10, 59)).toMatch(/invalid/i);
+  });
+  it("should return invalid if username arg less than length of 3", () => {
+    expect(validateUserInput(" ", 59)).toMatch(/invalid/i);
+  });
+  //POSITIVE TESTING FOR AGE
+  it("age should validate successfull if it is of type number", () => {
+    expect(validateUserInput("akash", 20)).toMatch(/success/i);
+  });
+  it("age should validate successfull if it is greater than 18", () => {
+    expect(validateUserInput("check", 18)).toMatch(/success/i);
+  });
+  //NEGATIVE THINKING FOR AGE
+  it("should return invalid if age arg is not of type number", () => {
+    expect(validateUserInput("yooo", "59")).toMatch(/invalid/i);
+  });
+  it("should return invalid if age arg less than 18", () => {
+    expect(validateUserInput("akash", 17)).toMatch(/invalid/i);
   });
 });
