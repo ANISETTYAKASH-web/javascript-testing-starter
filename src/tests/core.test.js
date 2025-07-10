@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { calculateDiscount, getCoupons, validateUserInput } from "../core";
+import {
+  calculateDiscount,
+  getCoupons,
+  isValidUsername,
+  validateUserInput,
+} from "../core";
 describe("Get Coupouns", () => {
   it("returns an array of length greater than 1", () => {
     expect(getCoupons().length).greaterThan(0);
@@ -69,5 +74,20 @@ describe("validateUserInput", () => {
   });
   it("should return invalid if age arg less than 18", () => {
     expect(validateUserInput("akash", 17)).toMatch(/invalid/i);
+  });
+});
+describe("isValidUserName", () => {
+  const minLength = 5;
+  const maxLength = 15;
+  it("should return true if all the conditions are satsiified", () => {
+    expect(isValidUsername("akash")).toBe(true);
+  });
+  it("should return true for boundary conditions", () => {
+    expect(isValidUsername("akash")).toBe(true);
+    expect(isValidUsername("A".repeat(15))).toBe(true);
+  });
+  it("should return false if username is too short or too long", () => {
+    expect(isValidUsername("a".repeat(minLength - 1))).toBe(false);
+    expect(isValidUsername("A".repeat(maxLength + 1))).toBe(false);
   });
 });
