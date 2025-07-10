@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   calculateDiscount,
+  canDrive,
   getCoupons,
   isValidUsername,
   validateUserInput,
@@ -90,4 +91,37 @@ describe("isValidUserName", () => {
     expect(isValidUsername("a".repeat(minLength - 1))).toBe(false);
     expect(isValidUsername("A".repeat(maxLength + 1))).toBe(false);
   });
+});
+describe("canDrive", () => {
+  it("should reture true if both age and country code are correct", () => {
+    expect(canDrive(20, "US")).toBe(true);
+  });
+  it("should reture false country code is invalid", () => {
+    expect(canDrive(20, "ind")).toMatch(/invalid/i);
+  });
+  it("should reture false if both age is below legal age of country", () => {
+    expect(canDrive(15, "US")).toBe(false);
+  });
+  it.each([
+    {
+      age: 15,
+      country: "US",
+      result: false,
+    },
+    {
+      age: 16,
+      country: "US",
+      result: true,
+    },
+    {
+      age: 17,
+      country: "US",
+      result: true,
+    },
+  ])(
+    "should return $result for $age and $country",
+    ({ age, country, result }) => {
+      expect(canDrive(age, country)).toBe(result);
+    }
+  );
 });
